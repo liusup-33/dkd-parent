@@ -2,6 +2,8 @@ package com.dkd.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.dkd.manage.domain.vo.NodeVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +44,7 @@ public class NodeController extends BaseController
     public TableDataInfo list(Node node)
     {
         startPage();
-        List<Node> list = nodeService.selectNodeList(node);
+        List<NodeVO> list = nodeService.selectNodeList(node);
         return getDataTable(list);
     }
 
@@ -54,8 +56,8 @@ public class NodeController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Node node)
     {
-        List<Node> list = nodeService.selectNodeList(node);
-        ExcelUtil<Node> util = new ExcelUtil<Node>(Node.class);
+        List<NodeVO> list = nodeService.selectNodeList(node);
+        ExcelUtil<NodeVO> util = new ExcelUtil<>(NodeVO.class);
         util.exportExcel(response, list, "点位管理数据");
     }
 

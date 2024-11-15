@@ -18,11 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, region_name, create_time, update_time, create_by, update_by, remark from tb_region
     </sql>
 
-    <select id="selectRegionList" parameterType="Region" resultMap="RegionResult">
-        <include refid="selectRegionVo"/>
+    <select id="selectRegionList" parameterType="Region" resultType="com.dkd.manage.domain.vo.RegionVO">
+        select r.*, COUNT(n.region_id) as node_count from tb_region r left join tb_node n on r.id = n.region_id
         <where>  
-            <if test="regionName != null  and regionName != ''"> and region_name like concat('%', #{regionName}, '%')</if>
+            <if test="regionName != null  and regionName != ''"> and r.region_name like concat('%', #{regionName}, '%')</if>
         </where>
+        GROUP BY r.id
     </select>
     
     <select id="selectRegionById" parameterType="Long" resultMap="RegionResult">

@@ -2,6 +2,7 @@ package com.dkd.manage.mapper;
 
 import java.util.List;
 import com.dkd.manage.domain.Region;
+import com.dkd.manage.domain.vo.RegionVO;
 
 /**
  * 区域管理Mapper接口
@@ -25,7 +26,7 @@ public interface RegionMapper
      * @param region 区域管理
      * @return 区域管理集合
      */
-    public List<Region> selectRegionList(Region region);
+    public List<RegionVO> selectRegionList(Region region);
 
     /**
      * 新增区域管理

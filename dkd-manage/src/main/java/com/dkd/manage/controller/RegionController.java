@@ -2,6 +2,8 @@ package com.dkd.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.dkd.manage.domain.vo.RegionVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +44,7 @@ public class RegionController extends BaseController
     public TableDataInfo list(Region region)
     {
         startPage();
-        List<Region> list = regionService.selectRegionList(region);
+        List<RegionVO> list = regionService.selectRegionList(region);
         return getDataTable(list);
     }
 
@@ -54,8 +56,8 @@ public class RegionController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, Region region)
     {
-        List<Region> list = regionService.selectRegionList(region);
-        ExcelUtil<Region> util = new ExcelUtil<Region>(Region.class);
+        List<RegionVO> list = regionService.selectRegionList(region);
+        ExcelUtil<RegionVO> util = new ExcelUtil<>(RegionVO.class);
         util.exportExcel(response, list, "区域管理数据");
     }
 
