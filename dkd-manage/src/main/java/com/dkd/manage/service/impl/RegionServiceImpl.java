@@ -1,13 +1,16 @@
 package com.dkd.manage.service.impl;
 
+import java.beans.Transient;
 import java.util.List;
 import com.dkd.common.utils.DateUtils;
 import com.dkd.manage.domain.vo.RegionVO;
+import com.dkd.manage.mapper.EmpMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dkd.manage.mapper.RegionMapper;
 import com.dkd.manage.domain.Region;
 import com.dkd.manage.service.IRegionService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 区域管理Service业务层处理
@@ -20,6 +23,9 @@ public class RegionServiceImpl implements IRegionService
 {
     @Autowired
     private RegionMapper regionMapper;
+
+    @Autowired
+    private EmpMapper empMapper;
 
     /**
      * 查询区域管理
@@ -64,11 +70,15 @@ public class RegionServiceImpl implements IRegionService
      * @param region 区域管理
      * @return 结果
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateRegion(Region region)
     {
         region.setUpdateTime(DateUtils.getNowDate());
-        return regionMapper.updateRegion(region);
+        int result = regionMapper.updateRegion(region);
+        // 更新人员表的区域名称
+        empMapper.updateRegionNameByRegionId(region.getRegionName(), region.getId());
+        return result;
     }
 
     /**
