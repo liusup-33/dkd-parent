@@ -1,5 +1,6 @@
 package com.dkd.manage.service;
 
+import java.rmi.ServerException;
 import java.util.List;
 import com.dkd.manage.domain.TbSku;
 
@@ -49,7 +50,7 @@ public interface ITbSkuService
      * @param skuIds 需要删除的商品管理主键集合
      * @return 结果
      */
-    public int deleteTbSkuBySkuIds(Long[] skuIds);
+    public int deleteTbSkuBySkuIds(Long[] skuIds) throws ServerException;
 
     /**
      * 删除商品管理信息

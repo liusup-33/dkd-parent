@@ -21,16 +21,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select sku_id, sku_name, sku_image, brand_Name, unit, price, class_id, is_discount, create_time, update_time from tb_sku
     </sql>
 
-    <select id="selectTbSkuList" parameterType="TbSku" resultMap="TbSkuResult">
-        <include refid="selectTbSkuVo"/>
+    <select id="selectTbSkuList" parameterType="TbSku" resultType="com.dkd.manage.domain.vo.SkuVO">
+        select s.*, sc.class_name as sku_class_name, ROUND(s.price/100, 2) as price_vo from tb_sku s left join tb_sku_class sc on s.class_id = sc.class_id
         <where>  
-            <if test="skuName != null  and skuName != ''"> and sku_name like concat('%', #{skuName}, '%')</if>
-            <if test="classId != null "> and class_id = #{classId}</if>
+            <if test="skuName != null  and skuName != ''"> and s.sku_name like concat('%', #{skuName}, '%')</if>
+            <if test="classId != null "> and s.class_id = #{classId}</if>
         </where>
     </select>
     
-    <select id="selectTbSkuBySkuId" parameterType="Long" resultMap="TbSkuResult">
-        <include refid="selectTbSkuVo"/>
+    <select id="selectTbSkuBySkuId" parameterType="Long" resultType="com.dkd.manage.domain.vo.SkuVO">
+        select sku_id, sku_name, sku_image, brand_Name, unit, price, ROUND(price/100, 2) as price_vo, class_id, is_discount, create_time, update_time from tb_sku
         where sku_id = #{skuId}
     </select>
         

@@ -1,5 +1,6 @@
 package com.dkd.manage.controller;
 
+import java.rmi.ServerException;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -97,8 +98,7 @@ public class TbSkuController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:sku:remove')")
     @Log(title = "商品管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{skuIds}")
-    public AjaxResult remove(@PathVariable Long[] skuIds)
-    {
+    public AjaxResult remove(@PathVariable Long[] skuIds) throws ServerException {
         return toAjax(tbSkuService.deleteTbSkuBySkuIds(skuIds));
     }
 }

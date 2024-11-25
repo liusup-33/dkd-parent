@@ -1,7 +1,10 @@
 package com.dkd.manage.service.impl;
 
+import java.rmi.ServerException;
 import java.util.List;
 import com.dkd.common.utils.DateUtils;
+import com.dkd.manage.domain.Channel;
+import com.dkd.manage.mapper.ChannelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dkd.manage.mapper.TbSkuMapper;
@@ -19,6 +22,9 @@ public class TbSkuServiceImpl implements ITbSkuService
 {
     @Autowired
     private TbSkuMapper tbSkuMapper;
+
+    @Autowired
+    private ChannelMapper channelMapper;
 
     /**
      * 查询商品管理
@@ -77,8 +83,12 @@ public class TbSkuServiceImpl implements ITbSkuService
      * @return 结果
      */
     @Override
-    public int deleteTbSkuBySkuIds(Long[] skuIds)
-    {
+    public int deleteTbSkuBySkuIds(Long[] skuIds) throws ServerException {
+        //关联货道的商品不能删除
+        List<Channel> channels = channelMapper.selectChannelListBySkuIds(skuIds);
+        if (channels != null && !channels.isEmpty()) {
+            throw new ServerException("商品存在货道中，不能删除");
+        }
         return tbSkuMapper.deleteTbSkuBySkuIds(skuIds);
     }
 
