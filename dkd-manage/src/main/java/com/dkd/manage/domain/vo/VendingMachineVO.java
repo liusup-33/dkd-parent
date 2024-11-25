@@ -12,6 +12,8 @@ public class VendingMachineVO extends VendingMachine {
 
     private String nodeName;
 
+    private String vmStatusName;
+
     public String getPartnerName() {
         return partnerName;
     }
@@ -42,5 +44,13 @@ public class VendingMachineVO extends VendingMachine {
 
     public void setNodeName(String nodeName) {
         this.nodeName = nodeName;
+    }
+
+    public String getVmStatusName() {
+        return vmStatusName;
+    }
+
+    public void setVmStatusName(String vmStatusName) {
+        this.vmStatusName = vmStatusName;
     }
 }

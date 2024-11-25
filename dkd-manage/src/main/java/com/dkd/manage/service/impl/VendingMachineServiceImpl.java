@@ -2,9 +2,12 @@ package com.dkd.manage.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson2.JSONObject;
 import com.dkd.common.utils.DateUtils;
 import com.dkd.common.utils.uuid.UUIDUtils;
 import com.dkd.manage.domain.*;
+import com.dkd.manage.domain.vo.VendingMachineVO;
 import com.dkd.manage.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +56,20 @@ public class VendingMachineServiceImpl implements IVendingMachineService
     @Override
     public List<VendingMachine> selectVendingMachineList(VendingMachine vendingMachine)
     {
-        return vendingMachineMapper.selectVendingMachineList(vendingMachine);
+        List<VendingMachine> vendingMachines = vendingMachineMapper.selectVendingMachineList(vendingMachine);
+        for (VendingMachine item : vendingMachines) {
+            VendingMachineVO itemVO = (VendingMachineVO)item;
+            itemVO.setVmStatusName("异常");
+            String runningStatus = itemVO.getRunningStatus();
+            JSONObject jsonObject = JSONObject.parseObject(runningStatus);
+            if (jsonObject != null && jsonObject.get("status") != null) {
+                Boolean status = (Boolean)jsonObject.get("status");
+                if (status) {
+                    itemVO.setVmStatusName("正常");
+                }
+            }
+        }
+        return vendingMachines;
     }
 
     /**
