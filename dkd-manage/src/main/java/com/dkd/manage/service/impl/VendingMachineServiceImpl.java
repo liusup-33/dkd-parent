@@ -128,6 +128,13 @@ public class VendingMachineServiceImpl implements IVendingMachineService
     @Override
     public int updateVendingMachine(VendingMachine vendingMachine)
     {
+        if (vendingMachine.getNodeId() != null) {
+            Node node = nodeMapper.selectNodeById(vendingMachine.getNodeId());
+            vendingMachine.setAddr(node.getDetailedAddress());
+            vendingMachine.setPartnerId(node.getPartnerId());
+            vendingMachine.setBusinessType(node.getBusinessType());
+            vendingMachine.setRegionId(node.getRegionId());
+        }
         vendingMachine.setUpdateTime(DateUtils.getNowDate());
         return vendingMachineMapper.updateVendingMachine(vendingMachine);
     }
