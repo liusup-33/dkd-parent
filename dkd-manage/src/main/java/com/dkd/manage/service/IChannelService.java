@@ -1,7 +1,10 @@
 package com.dkd.manage.service;
 
 import java.util.List;
+
+import com.dkd.common.core.domain.AjaxResult;
 import com.dkd.manage.domain.Channel;
+import com.dkd.manage.domain.request.ChannelConfigRequest;
 import com.dkd.manage.domain.vo.ChannelVO;
 
 /**
@@ -63,4 +66,11 @@ public interface IChannelService
      * 根据设备编码查询货道信息
      */
     public List<ChannelVO> selectChannelByInnerCode(String innerCode);
+
+    /**
+     * 更新货道配置信息
+     * @param channelConfigRequest
+     * @return
+     */
+    int updateChannelConfig(ChannelConfigRequest channelConfigRequest);
 }

@@ -64,6 +64,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectChannelVo"/>
         where inner_code = #{innerCode}
     </select>
+    <select id="selectChannelByChannelCode" resultType="com.dkd.manage.domain.Channel">
+        select id, channel_code, sku_id, vm_id, inner_code, max_capacity, current_capacity, last_supply_time, create_time, update_time from tb_channel
+        where channel_code = #{channelCode} and inner_code = #{innerCode}
+    </select>
 
     <insert id="insertChannel" parameterType="Channel" useGeneratedKeys="true" keyProperty="id">
         insert into tb_channel
@@ -128,5 +132,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+    <delete id="deleteChannelByInnerCode">
+        delete from tb_channel where inner_code = #{innerCode}
     </delete>
 </mapper>

@@ -2,6 +2,8 @@ package com.dkd.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.dkd.manage.domain.request.ChannelConfigRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,7 +110,18 @@ public class ChannelController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:channel:list')")
     @GetMapping("/list/{innerCode}")
     public AjaxResult selectChannelByInnerCode(@PathVariable("innerCode") String innerCode)
-        {
-            return success(channelService.selectChannelByInnerCode(innerCode));
-        }
+    {
+        return success(channelService.selectChannelByInnerCode(innerCode));
+    }
+
+    /**
+     * 修改设备货道信息
+      */
+    @PreAuthorize("@ss.hasPermi('manage:channel:edit')")
+    @Log(title = "售货机货道", businessType = BusinessType.UPDATE)
+    @PutMapping("/config")
+    public AjaxResult updateChannelConfig(@RequestBody ChannelConfigRequest channelConfigRequest)
+    {
+        return toAjax(channelService.updateChannelConfig(channelConfigRequest));
+    }
 }

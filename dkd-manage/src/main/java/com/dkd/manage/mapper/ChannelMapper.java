@@ -77,4 +77,16 @@ public interface ChannelMapper
      * @return
      */
     List<ChannelVO> selectChannelByInnerCode(@Param("innerCode") String innerCode);
+
+    /**
+     * 通过设备编码、货道编码查询售货机货道
+     */
+    Channel selectChannelByChannelCode(@Param("innerCode") String innerCode,@Param("channelCode") String channelCode);
+
+    /**
+     * 通过设备编码删除售货机货道
+     * @param innerCode
+     * @return
+     */
+    int deleteChannelByInnerCode(@Param("innerCode") String innerCode);
 }

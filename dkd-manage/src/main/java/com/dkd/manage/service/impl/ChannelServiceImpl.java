@@ -1,13 +1,19 @@
 package com.dkd.manage.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.dkd.common.core.domain.AjaxResult;
 import com.dkd.common.utils.DateUtils;
+import com.dkd.manage.domain.request.ChannelConfigRequest;
+import com.dkd.manage.domain.request.ChannelListRequest;
 import com.dkd.manage.domain.vo.ChannelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dkd.manage.mapper.ChannelMapper;
 import com.dkd.manage.domain.Channel;
 import com.dkd.manage.service.IChannelService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 售货机货道Service业务层处理
@@ -98,5 +104,29 @@ public class ChannelServiceImpl implements IChannelService
     @Override
     public List<ChannelVO> selectChannelByInnerCode(String innerCode) {
         return channelMapper.selectChannelByInnerCode(innerCode);
+    }
+
+    @Transactional
+    @Override
+    public int updateChannelConfig(ChannelConfigRequest channelConfigRequest) {
+        List<Channel> addList = new ArrayList<>();
+        ChannelListRequest[] channelList = channelConfigRequest.getChannelList();
+        for (ChannelListRequest channelListRequest : channelList) {
+            //通过设备编码、货道编码查询售货机货道
+            Channel channel = channelMapper.selectChannelByChannelCode(channelConfigRequest.getInnerCode(),channelListRequest.getChannelCode());
+            if(channel != null){
+                channel.setSkuId(channelListRequest.getSkuId());
+                channel.setCreateTime(DateUtils.getNowDate());
+                channel.setUpdateTime(DateUtils.getNowDate());
+                addList.add(channel);
+            }
+        }
+        //通过设备编码删除售货机货道
+        int i = channelMapper.deleteChannelByInnerCode(channelConfigRequest.getInnerCode());
+        if (i < 0) {
+            throw new RuntimeException("删除售货机货道失败");
+        }
+        //批量新增售货机货道
+        return channelMapper.batchInsertChannel(addList);
     }
 }
