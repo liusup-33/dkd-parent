@@ -2,6 +2,7 @@ package com.dkd.manage.mapper;
 
 import java.util.List;
 import com.dkd.manage.domain.Channel;
+import com.dkd.manage.domain.vo.ChannelVO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -69,4 +70,11 @@ public interface ChannelMapper
      * @return
      */
     public List<Channel> selectChannelListBySkuIds(@Param("skuIds") Long[] skuIds);
+
+    /**
+     * 根据售货机内码查询货道
+     * @param innerCode
+     * @return
+     */
+    List<ChannelVO> selectChannelByInnerCode(@Param("innerCode") String innerCode);
 }

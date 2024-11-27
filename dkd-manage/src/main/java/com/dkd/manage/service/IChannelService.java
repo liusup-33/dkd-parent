@@ -2,6 +2,7 @@ package com.dkd.manage.service;
 
 import java.util.List;
 import com.dkd.manage.domain.Channel;
+import com.dkd.manage.domain.vo.ChannelVO;
 
 /**
  * 售货机货道Service接口
@@ -58,4 +59,8 @@ public interface IChannelService
      * @return 结果
      */
     public int deleteChannelById(Long id);
+    /**
+     * 根据设备编码查询货道信息
+     */
+    public List<ChannelVO> selectChannelByInnerCode(String innerCode);
 }
