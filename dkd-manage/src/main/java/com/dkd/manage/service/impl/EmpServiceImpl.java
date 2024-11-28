@@ -114,4 +114,24 @@ public class EmpServiceImpl implements IEmpService
     {
         return empMapper.deleteEmpById(id);
     }
+
+    /**
+     * 根据售货机获取维修人员列表
+     * @param innerCode
+     * @return
+     */
+    @Override
+    public List<Emp> getOperationListByInnerCode(String innerCode) {
+        return empMapper.getOperationListByInnerCode(innerCode);
+    }
+
+    /**
+     * 根据售货机获取运营人员列表
+     * @param innerCode
+     * @return
+     */
+    @Override
+    public List<Emp> getBusinessListByInnerCode(String innerCode) {
+        return empMapper.getBusinessListByInnerCode(innerCode);
+    }
 }

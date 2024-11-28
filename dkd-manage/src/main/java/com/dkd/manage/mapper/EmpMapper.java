@@ -65,4 +65,17 @@ public interface EmpMapper
      */
     public int updateRegionNameByRegionId(@Param("regionName") String regionName, @Param("regionId") Long regionId);
 
+    /**
+     * 根据售货机获取维修人员列表
+     * @param innerCode
+     * @return
+     */
+    List<Emp> getOperationListByInnerCode(@Param("innerCode")String innerCode);
+
+    /**
+     * 根据售货机获取运营人员列表
+     * @param innerCode
+     * @return
+     */
+    List<Emp> getBusinessListByInnerCode(@Param("innerCode")String innerCode);
 }

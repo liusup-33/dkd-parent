@@ -58,4 +58,18 @@ public interface IEmpService
      * @return 结果
      */
     public int deleteEmpById(Long id);
+
+    /**
+     * 根据售货机获取维修人员列表
+     * @param innerCode
+     * @return
+     */
+    List<Emp> getOperationListByInnerCode(String innerCode);
+
+    /**
+     * 根据售货机获取运营人员列表根据售货机获取运营人员列表
+     * @param innerCode
+     * @return
+     */
+    List<Emp> getBusinessListByInnerCode(String innerCode);
 }

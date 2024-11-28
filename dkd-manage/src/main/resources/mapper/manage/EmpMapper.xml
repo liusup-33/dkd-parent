@@ -34,7 +34,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectEmpVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="getOperationListByInnerCode" resultType="com.dkd.manage.domain.Emp">
+        SELECT * from tb_emp
+        where region_id = (SELECT region_id from tb_vending_machine WHERE inner_code= #{innerCode})
+        and role_id = 3
+    </select>
+
+    <select id="getBusinessListByInnerCode" resultType="com.dkd.manage.domain.Emp">
+        SELECT * from tb_emp
+        where region_id = (SELECT region_id from tb_vending_machine WHERE inner_code= #{innerCode})
+        and role_id = 2
+    </select>
+
     <insert id="insertEmp" parameterType="Emp" useGeneratedKeys="true" keyProperty="id">
         insert into tb_emp
         <trim prefix="(" suffix=")" suffixOverrides=",">

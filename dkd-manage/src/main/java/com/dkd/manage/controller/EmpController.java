@@ -101,4 +101,20 @@ public class EmpController extends BaseController
     {
         return toAjax(empService.deleteEmpByIds(ids));
     }
+
+    /**
+     * 根据售货机获取维修人员列表
+     */
+    @GetMapping("/operationList/{innerCode}")
+    public AjaxResult getOperationListByInnerCode(@PathVariable String innerCode) {
+        return success(empService.getOperationListByInnerCode(innerCode));
+    }
+
+    /**
+     * 根据售货机获取运营人员列表
+     */
+    @GetMapping("/businessList/{innerCode}")
+    public AjaxResult getBusinessListByInnerCode(@PathVariable String innerCode) {
+        return success(empService.getBusinessListByInnerCode(innerCode));
+    }
 }
