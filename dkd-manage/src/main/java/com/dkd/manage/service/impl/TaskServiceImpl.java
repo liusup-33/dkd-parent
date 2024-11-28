@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.hutool.core.util.StrUtil;
+import com.dkd.common.core.domain.AjaxResult;
 import com.dkd.common.utils.DateUtils;
 import com.dkd.common.utils.SecurityUtils;
 import com.dkd.manage.domain.TaskDetails;
@@ -130,7 +131,7 @@ public class TaskServiceImpl implements ITaskService
             return dateStr + "0001";
         }
         String code = redisTemplate.opsForValue().increment(key).toString();
-        return StrUtil.padPre(code, 4, "0");
+        return dateStr + StrUtil.padPre(code, 4, "0");
     }
 
     /**
@@ -168,5 +169,13 @@ public class TaskServiceImpl implements ITaskService
     public int deleteTaskByTaskId(Long taskId)
     {
         return taskMapper.deleteTaskByTaskId(taskId);
+    }
+
+
+    @Override
+    public int cancelTask(Task task) {
+        task.setTaskStatus(3L);
+        task.setUpdateTime(DateUtils.getNowDate());
+        return taskMapper.updateTask(task);
     }
 }

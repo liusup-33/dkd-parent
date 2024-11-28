@@ -59,4 +59,6 @@ public interface ITaskService
      * @return 结果
      */
     public int deleteTaskByTaskId(Long taskId);
+
+    int cancelTask(Task task);
 }

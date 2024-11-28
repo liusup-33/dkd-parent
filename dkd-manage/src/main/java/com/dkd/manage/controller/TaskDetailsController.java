@@ -101,4 +101,13 @@ public class TaskDetailsController extends BaseController
     {
         return toAjax(taskDetailsService.deleteTaskDetailsByDetailsIds(detailsIds));
     }
+
+    @PreAuthorize("@ss.hasPermi('manage:taskDetails:list')")
+    @GetMapping("byTaskId/{taskId}")
+    public AjaxResult getByTaskId(@PathVariable("taskId") Long taskId)
+    {
+        TaskDetails taskDetails = new TaskDetails();
+        taskDetails.setTaskId(taskId);
+    	return success(taskDetailsService.selectTaskDetailsList(taskDetails));
+    }
 }
