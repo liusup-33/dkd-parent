@@ -58,4 +58,12 @@ public interface TaskDetailsMapper
      * @return 结果
      */
     public int deleteTaskDetailsByDetailsIds(Long[] detailsIds);
+
+    /**
+     * 批量新增工单详情
+     *
+     * @param taskDetails 工单详情
+     * @return 结果
+     */
+    public int batchInsertTaskDetails(List<TaskDetails> taskDetails);
 }

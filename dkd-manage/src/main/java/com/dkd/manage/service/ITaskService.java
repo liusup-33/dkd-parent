@@ -2,6 +2,7 @@ package com.dkd.manage.service;
 
 import java.util.List;
 import com.dkd.manage.domain.Task;
+import com.dkd.manage.domain.request.TaskRequest;
 
 /**
  * 工单Service接口
@@ -33,7 +34,7 @@ public interface ITaskService
      * @param task 工单
      * @return 结果
      */
-    public int insertTask(Task task);
+    public int insertTask(TaskRequest task);
 
     /**
      * 修改工单

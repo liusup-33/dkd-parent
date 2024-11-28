@@ -2,6 +2,8 @@ package com.dkd.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.dkd.manage.domain.request.TaskRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,7 +77,7 @@ public class TaskController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:task:add')")
     @Log(title = "工单", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Task task)
+    public AjaxResult add(@RequestBody TaskRequest task)
     {
         return toAjax(taskService.insertTask(task));
     }
